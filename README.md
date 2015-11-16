@@ -1,7 +1,7 @@
 # MinEngine Data
 
 This repository contains resources (fonts, shaders, textures, etc.) for use with
-MinEngine.  To use them, clone `minengine-data` into the build directory under
+[MinEngine](https://github.com/criptych/minengine).  To use them, clone `minengine-data` into the build directory under
 `data`, e.g.:
 
     git clone https://github.com/criptych/minengine.git minengine
