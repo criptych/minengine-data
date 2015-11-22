@@ -89,7 +89,6 @@ struct Material {
     float fresnelBias;
 };
 
-uniform mat4 uViewMatrix;
 uniform mat4 uNormMatrix;
 
 uniform Material uMaterial;
@@ -165,22 +164,12 @@ void main () {
     vec4 diffTexCol = texture2D(uMaterial.diffMap, texCoord);
     vec4 specTexCol = texture2D(uMaterial.specMap, texCoord);
     vec4 glowTexCol = texture2D(uMaterial.glowMap, texCoord);
-    //~ vec4 diffTexCol = vec4(1,0,0,1);
-    //~ vec4 specTexCol = vec4(0,1,0,1);
-    //~ vec4 glowTexCol = vec4(0,0,1,1);
-
     vec3 ambtColor, diffColor, specColor;
 
-    vec3 debugOutput;
 
-    //~ debugOutput.rgb = normal * 0.5 + 0.5;
+    for (int i = 0; i < cNumLights; i++) {
 
-    vec3 finalLightDir, finalHalfVec;
-    float finalLightDist;
-
-    for (int i = 0; i < 2; i++) {
-
-        vec3 lightPos = (uViewMatrix * uLights[i].position).xyz;
+        vec3 lightPos = uLights[i].position.xyz;
 
         vec3 lightDir = normalize(lightPos - vVertex);
         vec3 halfVec = normalize(eyeDir + lightDir);
@@ -189,14 +178,9 @@ void main () {
         float specFactor = max(0, dot(normal, halfVec));
         specFactor = pow(specFactor, uMaterial.specPower);
 
-        finalLightDir += lightDir;
-        finalHalfVec += halfVec;
-
 #if FRESNEL
         float fresnelFactor = uMaterial.fresnelBias + uMaterial.fresnelScale *
             pow(1.0 - dot(eyeDir, halfVec), uMaterial.fresnelPower);
-        //~ diffLight *= (1.0f - fresnelFactor);
-        //~ specLight *= (0.0f + fresnelFactor);
         specFactor = max(specFactor, fresnelFactor);
 #endif
 
@@ -207,20 +191,12 @@ void main () {
         vec3 spotDir = normalize(mat3(uNormMatrix) * uLights[i].spotDirection);
 
         float cosSpotAngle = dot(spotDir, -lightDir);
-        float spotFactor = pow(cosSpotAngle, uLights[i].spotExponent);
-        //~ float spotFactor = cosSpotAngle;
-
-        debugOutput.rgb = vec3(max(debugOutput.r, spotFactor));
-        //~ debugOutput.rgb = 0.5 + 0.5 * lightDir;
-
-        //~ spotFactor = smoothstep(
-            //~ uLights[i].spotConeOuterCos, uLights[i].spotConeInnerCos,
-            //~ step(uLights[i].spotConeOuterCos, cosSpotAngle) * spotFactor);
-
-        spotFactor = step(uLights[i].spotConeOuterCos, cosSpotAngle);
-
-        diffLight *= spotFactor;
-        specLight *= spotFactor;
+        float spotFactor = smoothstep(
+            uLights[i].spotConeOuterCos,
+            uLights[i].spotConeInnerCos,
+            step(uLights[i].spotConeOuterCos, cosSpotAngle) *
+                pow(cosSpotAngle, uLights[i].spotExponent)
+        );
 
         float lightDist = distance(lightPos, vVertex);
         float attenuate = 1.0 /
@@ -228,26 +204,19 @@ void main () {
             + uLights[i].attenuation.y * lightDist
             + uLights[i].attenuation.z * lightDist * lightDist);
 
-        finalLightDist = min(finalLightDist, lightDist);
-
         ambtLight *= attenuate;
-        diffLight *= attenuate;
-        specLight *= attenuate;
+        diffLight *= attenuate * spotFactor;
+        specLight *= attenuate * spotFactor;
 
         ambtColor += ambtLight;
         diffColor += diffLight;
         specColor += specLight;
     }
 
-    vec2 normCoord = gl_FragCoord.xy / uResolution.xy;
-
     fColor = vec4(vec3(0), diffTexCol.a);
     fColor.rgb += ambtColor * diffTexCol.rgb * glowTexCol.a;
-    if (normCoord.x >= 0.25)
     fColor.rgb += diffColor * diffTexCol.rgb;
-    if (normCoord.x >= 0.50)
     fColor.rgb += specColor * specTexCol.rgb * specTexCol.a;
-    if (normCoord.x >= 0.75)
     fColor.rgb += glowTexCol.rgb * uGlowFactor;
 
 #ifdef FOG_FUNC
@@ -266,6 +235,4 @@ void main () {
 #if BLOOM
     fBloom.rgb = step(uBloomThreshold, intensity(fColor.rgb)) * fColor.rgb;
 #endif
-
-    //~ fColor.rgb = debugOutput;
 }
