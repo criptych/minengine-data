@@ -1,8 +1,24 @@
 light = Light {
-    position = { 0, 2, 10 };
+    position = { 0, 5, 0 };
     ambientColor = { 0.1, 0.1, 0.1 };
-    diffuseColor = { 0.9, 0.9, 0.9 };
+    diffuseColor = { 0.9, 0.8, 0.5 };
     specularColor = { 1.0, 1.0, 1.0 };
+
+    spotDirection = { 0, -1, 0 };
+    spotConeInner = 25;
+    spotConeOuter = 30;
+    spotExponent = 5;
+};
+
+light2 = Light {
+    position = { 0, 0, 0 };
+    ambientColor = { 0.2, 0.2, 0.2 };
+    diffuseColor = { 0.2, 0.2, 0.2 };
+    specularColor = { 0, 0, 0 };
+
+    spotDirection = { 0, 0, 0 };
+
+    attenuation = { 1, 0.1, 0.01 };
 };
 
 room = Object {
