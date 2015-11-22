@@ -11,27 +11,106 @@ light = Light {
 };
 
 light2 = Light {
-    position = { -5, 0, 5 };
-    ambientColor = { 0.2, 0.2, 0.2 };
+    position = { -3, 2, 3 };
+    ambientColor = { 0, 0, 0 };
     diffuseColor = { 0, 0, 0 };
     specularColor = { 5, 0, 0 };
     attenuation = { 1, 0.1, 0.01 };
+    spotConeInner = 180;
+    spotConeOuter = 180;
+    spotDirection = { 0, -1, 0 };
+};
+
+light2_ball = Object {
+    model = {
+        primitive = "triangles";
+        shape = "sphere";
+        radius = 0.1;
+        steps = 8;
+        center = { -3, 2, 3 };
+    };
+    material = {
+        diffMap = "data/textures/black.png";
+        specMap = "data/textures/white.png";
+        glowMap = "data/textures/black.png";
+        bumpMap = "data/textures/flat.png";
+        specPower = 100.0;
+        bumpScale = 0.00;
+        bumpBias = 0.00;
+        fresnelPower = 5.0;
+        fresnelScale = 1.0;
+        fresnelBias = 0.0;
+    };
+    shader = "data/shaders/default.330";
 };
 
 light3 = Light {
-    position = { 0, 0, 5 };
-    ambientColor = { 0.2, 0.2, 0.2 };
+    position = { 0, 2, 3 };
+    ambientColor = { 0, 0, 0 };
     diffuseColor = { 0, 0, 0 };
     specularColor = { 5, 5, 0 };
     attenuation = { 1, 0.1, 0.01 };
+    spotConeInner = 180;
+    spotConeOuter = 180;
+    spotDirection = { 0, -1, 0 };
+};
+
+light3_ball = Object {
+    model = {
+        primitive = "triangles";
+        shape = "sphere";
+        radius = 0.1;
+        steps = 8;
+        center = { 0, 2, 3 };
+    };
+    material = {
+        diffMap = "data/textures/black.png";
+        specMap = "data/textures/white.png";
+        glowMap = "data/textures/black.png";
+        bumpMap = "data/textures/flat.png";
+        specPower = 100.0;
+        bumpScale = 0.00;
+        bumpBias = 0.00;
+        fresnelPower = 5.0;
+        fresnelScale = 1.0;
+        fresnelBias = 0.0;
+    };
+    shader = "data/shaders/default.330";
 };
 
 light4 = Light {
-    position = { 5, 0, 5 };
-    ambientColor = { 0.2, 0.2, 0.2 };
+    position = { 3, 2, 3 };
+    ambientColor = { 0.0, 0.0, 0.0 };
     diffuseColor = { 0, 0, 0 };
     specularColor = { 0, 5, 0 };
     attenuation = { 1, 0.1, 0.01 };
+    spotConeInner = 180;
+    spotConeOuter = 180;
+    spotExponent = 0.0;
+    spotDirection = { 0, -1, 0 };
+};
+
+light4_ball = Object {
+    model = {
+        primitive = "triangles";
+        shape = "sphere";
+        radius = 0.1;
+        steps = 8;
+        center = { 3, 2, 3 };
+    };
+    material = {
+        diffMap = "data/textures/black.png";
+        specMap = "data/textures/white.png";
+        glowMap = "data/textures/black.png";
+        bumpMap = "data/textures/flat.png";
+        specPower = 100.0;
+        bumpScale = 0.00;
+        bumpBias = 0.00;
+        fresnelPower = 5.0;
+        fresnelScale = 1.0;
+        fresnelBias = 0.0;
+    };
+    shader = "data/shaders/default.330";
 };
 
 room = Object {
