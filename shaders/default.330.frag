@@ -111,6 +111,8 @@ in vec2 vTexCoord;
 out vec4 fColor;
 out vec4 fBloom;
 
+const float Pi = 3.14159265358;
+
 ////////////////////////////////////////////////////////////////////////////////
 // source: http://www.thetenthplanet.de/archives/1180
 ////////////////////////////////////////////////////////////////////////////////
@@ -166,6 +168,9 @@ void main () {
     vec4 glowTexCol = texture2D(uMaterial.glowMap, texCoord);
     vec3 ambtColor, diffColor, specColor;
 
+    float R2 = 1.0 / (uMaterial.specPower * uMaterial.specPower);
+
+    float NdotV = dot(normal, eyeDir);
 
     for (int i = 0; i < cNumLights; i++) {
 
@@ -174,15 +179,23 @@ void main () {
         vec3 lightDir = normalize(lightPos - vVertex);
         vec3 halfVec = normalize(eyeDir + lightDir);
 
-        float diffFactor = max(0, dot(normal, lightDir));
-        float specFactor = max(0, dot(normal, halfVec));
-        specFactor = pow(specFactor, uMaterial.specPower);
+        float NdotL = dot(normal, lightDir);
+        float NdotH = dot(normal, halfVec);
+        float VdotH = dot(eyeDir, halfVec);
 
-#if FRESNEL
-        float fresnelFactor = uMaterial.fresnelBias + uMaterial.fresnelScale *
-            pow(1.0 - dot(eyeDir, halfVec), uMaterial.fresnelPower);
-        specFactor = max(specFactor, fresnelFactor);
-#endif
+        float G0 = 2.0 * NdotH / VdotH;
+        float Gb = G0 * NdotV;
+        float Gc = G0 * NdotL;
+        float G = min(1.0, min(Gb, Gc));
+
+        float NH2 = NdotH * NdotH;
+        float D = exp((NH2 - 1.0) / (R2 * NH2)) / (Pi * R2 * NH2 * NH2);
+
+        float F = uMaterial.fresnelBias + uMaterial.fresnelScale *
+            pow((1.0 - VdotH), uMaterial.fresnelPower);
+
+        float diffFactor = NdotL;
+        float specFactor = G * D * F / (Pi * NdotL * NdotV);
 
         vec3 ambtLight = uLights[i].ambtColor.rgb;
         vec3 diffLight = uLights[i].diffColor.rgb * diffFactor;
