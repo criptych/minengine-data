@@ -5,9 +5,9 @@ light = Light {
     specularColor = { 1.0, 1.0, 1.0 };
 
     spotDirection = { 0, -1, 0 };
-    spotConeInner = 25;
+    spotConeInner = 29;
     spotConeOuter = 30;
-    spotExponent = 5;
+    spotExponent = 2;
 };
 
 light2 = Light {
@@ -58,8 +58,8 @@ ball = Object {
         glowMap = "data/textures/black.png";
         bumpMap = "data/textures/flat.png";
         specPower = 100.0;
-        bumpScale = 0.00;
-        bumpBias = 0.00;
+        bumpScale = 0.02;
+        bumpBias = 0.01;
         fresnelPower = 5.0;
         fresnelScale = 1.0;
         fresnelBias = 0.0;
@@ -79,7 +79,7 @@ cube = Object {
         specMap = "data/textures/cube_specular.png";
         glowMap = "data/textures/cube_glow.png";
         bumpMap = "data/textures/cube_normal.png";
-        specPower = 1000.0;
+        specPower = 100.0;
         bumpScale = 0.05;
         bumpBias = -0.02;
         fresnelPower = 5.0;
