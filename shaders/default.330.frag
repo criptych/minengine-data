@@ -89,6 +89,8 @@ struct Material {
     float fresnelBias;
 };
 
+uniform mat4 uViewMatrix;
+
 uniform Material uMaterial;
 
 uniform float uGlowFactor = 1.0;
@@ -180,6 +182,27 @@ void main () {
         vec3 ambtLight = uLights[i].ambtColor.rgb;
         vec3 diffLight = uLights[i].diffColor.rgb * diffFactor;
         vec3 specLight = uLights[i].specColor.rgb * specFactor;
+
+        vec3 spotDir = normalize(mat3(uViewMatrix) * uLights[i].spotDirection.xyz);
+
+        float cosSpotAngle = dot(spotDir, -lightDir);
+        float spotFactor = pow(cosSpotAngle, uLights[i].spotExponent);
+        spotFactor = smoothstep(
+            uLights[i].spotConeOuterCos, uLights[i].spotConeInnerCos,
+            step(uLights[i].spotConeOuterCos, cosSpotAngle) * spotFactor);
+
+        diffLight *= spotFactor;
+        specLight *= spotFactor;
+
+        float lightDist = distance(uLights[i].position.xyz, vVertex);
+        float attenuate = 1.0 /
+             (uLights[i].attenuation.x
+            + uLights[i].attenuation.y * lightDist
+            + uLights[i].attenuation.z * lightDist * lightDist);
+
+        ambtLight *= attenuate;
+        diffLight *= attenuate;
+        specLight *= attenuate;
 
 #if FRESNEL
         float fresnelFactor = uMaterial.fresnelBias + uMaterial.fresnelScale *
