@@ -50,6 +50,7 @@ ball = Object {
         shape = "sphere";
         radius = 0.5;
         steps = { 8, 16 };
+        center = { 1, 0.5, 0 };
     };
     material = {
         diffMap = "data/textures/white.png";
@@ -71,7 +72,7 @@ cube = Object {
         primitive = "triangles";
         shape = "box";
         size = { 0.5, 0.5, 0.5 };
-        center = { 0, 0.5, 0 };
+        center = { -1, 0.5, 0 };
     };
     material = {
         diffMap = "data/textures/cube_albedo.png";
