@@ -1,3 +1,10 @@
+light = Light {
+    position = { 0, 2, 10 };
+    ambientColor = { 0.1, 0.1, 0.1 };
+    diffuseColor = { 0.9, 0.9, 0.9 };
+    specularColor = { 1.0, 1.0, 1.0 };
+};
+
 room = Object {
     model = {
         primitive = "triangles";
