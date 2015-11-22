@@ -5,19 +5,32 @@ light = Light {
     specularColor = { 1.0, 1.0, 1.0 };
 
     spotDirection = { 0, -1, 0 };
-    spotConeInner = 29;
+    spotConeInner = 25;
     spotConeOuter = 30;
     spotExponent = 2;
 };
 
 light2 = Light {
-    position = { 0, 0, 0 };
+    position = { -5, 0, 5 };
     ambientColor = { 0.2, 0.2, 0.2 };
-    diffuseColor = { 0.2, 0.2, 0.2 };
-    specularColor = { 0, 0, 0 };
+    diffuseColor = { 0, 0, 0 };
+    specularColor = { 5, 0, 0 };
+    attenuation = { 1, 0.1, 0.01 };
+};
 
-    spotDirection = { 0, 0, 0 };
+light3 = Light {
+    position = { 0, 0, 5 };
+    ambientColor = { 0.2, 0.2, 0.2 };
+    diffuseColor = { 0, 0, 0 };
+    specularColor = { 5, 5, 0 };
+    attenuation = { 1, 0.1, 0.01 };
+};
 
+light4 = Light {
+    position = { 5, 0, 5 };
+    ambientColor = { 0.2, 0.2, 0.2 };
+    diffuseColor = { 0, 0, 0 };
+    specularColor = { 0, 5, 0 };
     attenuation = { 1, 0.1, 0.01 };
 };
 
@@ -79,7 +92,7 @@ cube = Object {
         specMap = "data/textures/cube_specular.png";
         glowMap = "data/textures/cube_glow.png";
         bumpMap = "data/textures/cube_normal.png";
-        specPower = 100.0;
+        specPower = 200.0;
         bumpScale = 0.05;
         bumpBias = -0.02;
         fresnelPower = 5.0;
