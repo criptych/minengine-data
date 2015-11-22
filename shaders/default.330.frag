@@ -60,10 +60,18 @@ uniform vec2 uResolution = vec2(1);
 const int cNumLights = 4;
 
 struct Light {
-    vec3 position;
     vec4 ambtColor;
     vec4 diffColor;
     vec4 specColor;
+    vec3 position;
+    vec3 halfVector;
+    vec3 spotDirection;
+    float spotExponent;
+    float spotConeInner;
+    float spotConeOuter;
+    float spotConeInnerCos;
+    float spotConeOuterCos;
+    vec3 attenuation;
 };
 
 uniform Light[cNumLights] uLights;
