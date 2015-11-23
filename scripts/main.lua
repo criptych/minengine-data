@@ -29,7 +29,7 @@ light2_ball = Object {
         center = { -3, 2, 3 };
     };
     material = {
-        diffMap = "data/textures/black.png";
+        diffMap = "data/textures/white.png";
         specMap = "data/textures/white.png";
         glowMap = "data/textures/black.png";
         bumpMap = "data/textures/flat.png";
@@ -63,7 +63,7 @@ light3_ball = Object {
         center = { 0, 2, 3 };
     };
     material = {
-        diffMap = "data/textures/black.png";
+        diffMap = "data/textures/white.png";
         specMap = "data/textures/white.png";
         glowMap = "data/textures/black.png";
         bumpMap = "data/textures/flat.png";
@@ -97,7 +97,7 @@ light4_ball = Object {
         center = { 3, 2, 3 };
     };
     material = {
-        diffMap = "data/textures/black.png";
+        diffMap = "data/textures/white.png";
         specMap = "data/textures/white.png";
         glowMap = "data/textures/black.png";
         bumpMap = "data/textures/flat.png";
