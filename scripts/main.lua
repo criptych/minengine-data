@@ -5,19 +5,18 @@ light = Light {
     specularColor = { 1.0, 1.0, 1.0 };
 
     spotDirection = { 0, -1, 0 };
-    spotConeInner = 25;
-    spotConeOuter = 30;
-    spotExponent = 2;
+    spotConeInner = 60;
+    spotConeOuter = 90;
 };
 
 light2 = Light {
     position = { -3, 2, 3 };
     ambientColor = { 0, 0, 0 };
-    diffuseColor = { 0, 0, 0 };
+    diffuseColor = { 1, 0, 0 };
     specularColor = { 5, 0, 0 };
     attenuation = { 1, 0.1, 0.01 };
-    spotConeInner = 180;
-    spotConeOuter = 180;
+    spotConeInner = 30;
+    spotConeOuter = 40;
     spotDirection = { 0, -1, 0 };
 };
 
@@ -47,11 +46,11 @@ light2_ball = Object {
 light3 = Light {
     position = { 0, 2, 3 };
     ambientColor = { 0, 0, 0 };
-    diffuseColor = { 0, 0, 0 };
+    diffuseColor = { 1, 1, 0 };
     specularColor = { 5, 5, 0 };
     attenuation = { 1, 0.1, 0.01 };
-    spotConeInner = 180;
-    spotConeOuter = 180;
+    spotConeInner = 30;
+    spotConeOuter = 40;
     spotDirection = { 0, -1, 0 };
 };
 
@@ -81,12 +80,11 @@ light3_ball = Object {
 light4 = Light {
     position = { 3, 2, 3 };
     ambientColor = { 0.0, 0.0, 0.0 };
-    diffuseColor = { 0, 0, 0 };
+    diffuseColor = { 0, 1, 0 };
     specularColor = { 0, 5, 0 };
     attenuation = { 1, 0.1, 0.01 };
-    spotConeInner = 180;
-    spotConeOuter = 180;
-    spotExponent = 0.0;
+    spotConeInner = 30;
+    spotConeOuter = 40;
     spotDirection = { 0, -1, 0 };
 };
 
