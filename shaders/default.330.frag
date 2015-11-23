@@ -204,18 +204,17 @@ void main () {
         vec3 spotDir = normalize(mat3(uNormMatrix) * uLights[i].spotDirection);
 
         float cosSpotAngle = dot(spotDir, -lightDir);
-        float spotFactor = smoothstep(
-            uLights[i].spotConeOuterCos,
-            uLights[i].spotConeInnerCos,
-            step(uLights[i].spotConeOuterCos, cosSpotAngle) *
-                pow(cosSpotAngle, uLights[i].spotExponent)
-        );
+        float spotFactor = (cosSpotAngle - uLights[i].spotConeOuterCos) /
+            (uLights[i].spotConeInnerCos - uLights[i].spotConeOuterCos);
+        spotFactor = pow(spotFactor, uLights[i].spotExponent);
+        spotFactor = clamp(spotFactor, 0.0, 1.0);
 
         float lightDist = distance(lightPos, vVertex);
         float attenuate = 1.0 /
              (uLights[i].attenuation.x
             + uLights[i].attenuation.y * lightDist
             + uLights[i].attenuation.z * lightDist * lightDist);
+        attenuate = clamp(attenuate, 0.0, 1.0);
 
         ambtLight *= attenuate;
         diffLight *= attenuate * spotFactor;
